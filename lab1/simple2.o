@@ -1,0 +1,71 @@
+	.build_version macos, 26, 0	sdk_version 26, 5
+	.section	__TEXT,__text,regular,pure_instructions
+	.globl	__Z6squarei                     ; -- Begin function _Z6squarei
+	.p2align	2
+__Z6squarei:                            ; @_Z6squarei
+	.cfi_startproc
+; %bb.0:
+	mul	w0, w0, w0
+	ret
+	.cfi_endproc
+                                        ; -- End function
+	.globl	__Z14sum_of_squaresii           ; -- Begin function _Z14sum_of_squaresii
+	.p2align	2
+__Z14sum_of_squaresii:                  ; @_Z14sum_of_squaresii
+	.cfi_startproc
+; %bb.0:
+	mul	w8, w0, w0
+	madd	w0, w1, w1, w8
+	ret
+	.cfi_endproc
+                                        ; -- End function
+	.globl	__Z12bump_counterv              ; -- Begin function _Z12bump_counterv
+	.p2align	2
+__Z12bump_counterv:                     ; @_Z12bump_counterv
+	.cfi_startproc
+; %bb.0:
+	adrp	x8, _global_counter@PAGE
+	ldr	w9, [x8, _global_counter@PAGEOFF]
+	add	w9, w9, #1
+	str	w9, [x8, _global_counter@PAGEOFF]
+	ret
+	.cfi_endproc
+                                        ; -- End function
+	.globl	_main                           ; -- Begin function main
+	.p2align	2
+_main:                                  ; @main
+	.cfi_startproc
+; %bb.0:
+	sub	sp, sp, #48
+	stp	x29, x30, [sp, #32]             ; 16-byte Folded Spill
+	add	x29, sp, #32
+	.cfi_def_cfa w29, 16
+	.cfi_offset w30, -8
+	.cfi_offset w29, -16
+	adrp	x8, _global_counter@PAGE
+	ldr	w9, [x8, _global_counter@PAGEOFF]
+	add	w9, w9, #1
+	str	w9, [x8, _global_counter@PAGEOFF]
+	mov	w8, #42                         ; =0x2a
+	stp	x9, x8, [sp, #8]
+	mov	w8, #25                         ; =0x19
+	str	x8, [sp]
+Lloh0:
+	adrp	x0, l_.str@PAGE
+Lloh1:
+	add	x0, x0, l_.str@PAGEOFF
+	bl	_printf
+	mov	w0, #0                          ; =0x0
+	ldp	x29, x30, [sp, #32]             ; 16-byte Folded Reload
+	add	sp, sp, #48
+	ret
+	.loh AdrpAdd	Lloh0, Lloh1
+	.cfi_endproc
+                                        ; -- End function
+	.globl	_global_counter                 ; @global_counter
+.zerofill __DATA,__common,_global_counter,4,2
+	.section	__TEXT,__cstring,cstring_literals
+l_.str:                                 ; @.str
+	.asciz	"Result: %d, Counter: %d, Magic: %d\n"
+
+.subsections_via_symbols
